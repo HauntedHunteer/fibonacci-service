@@ -1,0 +1,72 @@
+<div id="outer" class="container">
+  <div id="inner">
+    <div class="row m-1">
+      <div class="col m-5">
+        <h1 class="display-5">Uruchomienie usługi</h1>
+        Należy otworzyć terminal w głównym katalogu projektu, a następnie wydać polecenie:
+        <b> docker compose -f docker-compose.dev.yml up --build </b>
+        Po uruchominiu wystarczy w przeglądarce wpisać adres: http://localhost:4200
+      </div>
+      <div class="col m-5">
+        <h1 class="display-5">Architektura usługi</h1>
+        Usługa składa się z 5 mikroserwisów:
+        <ul>
+
+          <li>aplikacji klienckiej (Angular),</li>
+          <li>serwera (Spring Boot),</li>
+          <li>bazy danych (Postgres),</li>
+          <li>bazy danych (Redis),</li>
+          <li>worker-a (React App) - modyfikacja z lab 9 (dodano wydajniejszy algorytm).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row m-1">
+      <img src="/assets/pfwcho_zad1_architektura.drawio.png" alt="image">
+    </div>
+
+    <div class="row m-1">
+      <div class="col m-5">
+        <h1 class="display-5">Funkcjonalności</h1>
+        Dla użytkownika dostępne są trzy strony:
+        <ul>
+          <li>startowa - wyświetlająca informacje autorze,</li>
+          <li>kalkulator - pozwalająca na wprowadzenie kolejnych wyrazów ciągu
+            Fibonacciego (ograniczenie: największy wyraz ciągu (k), gdzie k <= 20),
+            wyświetlająca wszystkie wprowadzone wyrazy oraz wyliczone wartości dla wprowadzonych wyrazów,</li>
+          <li>dokumentacja - wyświetlająca opis usługi.</li>
+        </ul>
+      </div>
+      <div class="col m-5">
+        <h1 class="display-5">Działanie kalkulatora</h1>
+        <ol>
+          <li>Użytkownik wprowadza wyraz ciągu.</li>
+          <li>Aplikacja kliencka przesyła liczbę do serwera.</li>
+          <li>Serwer zapisuje wprowadzony przez użytkownika wyraz do bazy danych (Postgers),
+            jeśli jeszcze nie istnieje w bazie.
+            Następnie wstawia wyraz do bazy drugiej bazy (Redis) oraz powiadamia workera.</li>
+          <li>Worker oblicza wartość ciagu dla zadanego wyrazu i umieszcza wynik w bazie (Redis).</li>
+          <li>Aplikacja kliencka odpytuje serwer o wyniki oraz wyrazy z bazy (Postgres).</li>
+          <li>Serwer przesyła zapytanie do bazy (Redis) oraz bazy (Postgres).</li>
+          <li>Wynik jest wyświetlany na stronie.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="row m-1">
+      <div class="col m-5">
+        <h1 class="display-5">Połączenia</h1>
+        Aplikacja kliencka (Angular) wyswietla stronę na http://localhost:4200,
+        komunikuje się z serwerem (Spring Boot) poprzez port 8080.
+        Serwer komunikuje się z bazami danych Postgres oraz Redis odpowiednio na portach 5432 i 6379.
+        Worker współpracuje tylko z bazą Redis, nasłuchuje na zdarzenie,
+        gdy wystąpi oblicza wartość ciągu dla zadanego wyrazu i wstawia wynik do bazy.
+      </div>
+      <div class="col m-5">
+
+      </div>
+    </div>
+
+  </div>
+</div>
+

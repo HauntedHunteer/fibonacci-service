@@ -1,0 +1,47 @@
+<div id="outer" class="container">
+  <div id="inner">
+    <h1 class="display-2">Wyznacz wartości ciagu Fibonacciego</h1>
+    <form [formGroup]="form" (ngSubmit)="calculateFib()">
+      <div class="row m-5">
+        <div class="col" >
+
+        </div>
+        <div class="col form-group">
+          <input type="text" class="form-control" placeholder="Wprowadź k-ty element" formControlName="number">
+          <div *ngIf="f.number.touched && f.number.invalid" class="alert alert-danger mt-2">
+            <div *ngIf="f.number.errors && f.number.errors.required">Wypełnij pole</div>
+          </div>
+        </div>
+        <div class="col form-group" >
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Oblicz</button>
+        </div>
+      </div>
+      <div class="row m-5">
+        <div class="col" *ngIf="errorOccurred === true">
+          <h1 class="display-6">Błąd: <span [style.color]="'red'">{{ ERROR_MSG }}</span> </h1>
+        </div>
+        <div class="col" >
+
+        </div>
+      </div>
+    </form>
+    <div class="row m-5">
+      <div class="col">
+      <h1>Wprowadzone indeksy:</h1>
+        <div *ngIf="allEnteredIndexes">
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let fibIndex of allEnteredIndexes">{{ fibIndex.fibIndex }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <h1>Obliczone wartości:</h1>
+        <div *ngIf="calculatedValues">
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let fib of calculatedValues">Index: {{ fib.fibIndex }} Wartość: {{ fib.fibValue }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

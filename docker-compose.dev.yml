@@ -1,0 +1,49 @@
+version: '3'
+services:
+
+  postgres:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./postgres
+    environment:
+      - POSTGRES_PASSWORD=admin
+    
+  redis:
+    image: 'redis:6.2.6'
+    ports:
+      - "6379:6379"
+
+  server:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./fib-server
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/fibbase
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+    ports:
+      - "8080:8080"
+    links:
+     - redis
+    
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./fib-client
+    ports:
+    - "4200:4200"
+  
+  worker:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    volumes:
+      - /app/node_modules
+      - ./worker:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
