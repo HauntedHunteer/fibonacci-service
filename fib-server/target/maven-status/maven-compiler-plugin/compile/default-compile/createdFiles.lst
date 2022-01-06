@@ -1,0 +1,6 @@
+com\niemczuk\fibserver\FibElement.class
+com\niemczuk\fibserver\FibPairDto.class
+com\niemczuk\fibserver\FibElementRepository.class
+com\niemczuk\fibserver\FibServerApplication.class
+com\niemczuk\fibserver\FibElementService.class
+com\niemczuk\fibserver\ApiController.class

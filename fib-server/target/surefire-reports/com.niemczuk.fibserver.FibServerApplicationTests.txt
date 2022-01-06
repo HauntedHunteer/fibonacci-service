@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.niemczuk.fibserver.FibServerApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 19.461 s - in com.niemczuk.fibserver.FibServerApplicationTests
